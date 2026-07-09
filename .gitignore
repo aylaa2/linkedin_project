@@ -1,0 +1,12 @@
+# secrets — never commit these
+.env
+*.env
+!.env.example
+
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# os junk
+.DS_Store

@@ -1,0 +1,14 @@
+Senior Full Stack Engineer (React + Node.js)
+
+We are looking for a Senior Full Stack Engineer to join our product team in Bucharest (hybrid).
+
+Requirements:
+- 5+ years building web applications
+- Strong with React, TypeScript and Node.js
+- Experience with PostgreSQL and REST APIs
+- Comfortable owning features end to end
+
+Nice to have:
+- AWS experience
+- Familiarity with Docker and CI/CD
+- Prior startup experience
