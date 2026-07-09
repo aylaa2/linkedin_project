@@ -5,8 +5,13 @@ from .config import SERPER_API_KEY, SERP_PAGES, SERP_GL, SERP_HL, has_serper
 SERPER_URL = "https://google.serper.dev/search"
 
 
-async def serper_search(query: str, pages: int | None = None, mock: bool = False) -> list[dict]:
-    """Run ONE query against Serper.dev, pulling `pages` pages.
+async def serper_search(
+    query: str,
+    pages: int | None = None,
+    mock: bool = False,
+    start_page: int = 1,
+) -> list[dict]:
+    """Run ONE query against Serper.dev, pulling `pages` pages from `start_page`.
 
     Returns raw organic items: {"link", "title", "snippet"}.
 
@@ -19,7 +24,7 @@ async def serper_search(query: str, pages: int | None = None, mock: bool = False
     pages = pages or SERP_PAGES
     out: list[dict] = []
     async with httpx.AsyncClient(timeout=20.0) as client:
-        for page in range(1, pages + 1):
+        for page in range(start_page, start_page + pages):
             resp = await client.post(
                 SERPER_URL,
                 headers={"X-API-KEY": SERPER_API_KEY, "Content-Type": "application/json"},

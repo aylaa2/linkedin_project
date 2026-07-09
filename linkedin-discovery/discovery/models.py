@@ -3,17 +3,18 @@ from pydantic import BaseModel, Field
 
 
 class QuerySignals(BaseModel):
-    """Structured signals LLM #1 extracts from the JD, plus ready Google queries.
+    """Signals LLM #1 extracts from the JD + the Google queries built from them.
 
-    Keeping the signals separate from `boolean_queries` lets you rebuild/A-B queries
-    in code without re-prompting — useful for the prompt-design research.
+    Keeping the signals separate from `boolean_queries` lets you rebuild/A-B
+    queries in code without re-prompting — useful for the prompt-design research.
+    `location` comes from the user's location input, not from the JD.
     """
 
     role_titles: list[str] = Field(default_factory=list)
     must_have: list[str] = Field(default_factory=list)
     nice_to_have: list[str] = Field(default_factory=list)
     seniority: Optional[str] = None
-    locations: list[str] = Field(default_factory=list)
+    location: str = ""
     boolean_queries: list[str] = Field(default_factory=list)
 
 

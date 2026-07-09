@@ -9,19 +9,30 @@ from discovery.pipeline import discover  # noqa: E402
 
 def main() -> None:
     """Usage:
-    python scripts/run.py                       # data/sample_jd.txt
-    python scripts/run.py path/to/jd.txt        # your own JD
-    python scripts/run.py --dry-run             # no keys (mock Serper + heuristic LLM)
-    python scripts/run.py path/to/jd.txt --json # raw JSON output
+    python scripts/run.py data/sample_jd.txt "Bucharest"
+    python scripts/run.py path/to/jd.txt                # JD file, no location
+    python scripts/run.py "Senior React dev..." "Iasi"  # literal JD text works too
+    python scripts/run.py data/sample_jd.txt "London" --urls   # plain list of links
+    python scripts/run.py data/sample_jd.txt "London" --json   # raw JSON output
+    python scripts/run.py data/sample_jd.txt --max=20          # how many profiles
+    python scripts/run.py data/sample_jd.txt --dry-run         # no keys (mock Serper)
     """
     args = sys.argv[1:]
     mock = "--dry-run" in args
     as_json = "--json" in args
     urls_only = "--urls" in args
-    file_arg = next((a for a in args if not a.startswith("--")), "data/sample_jd.txt")
+    max_hits = next((int(a.split("=", 1)[1]) for a in args if a.startswith("--max=")), 50)
+    positional = [a for a in args if not a.startswith("--")]
+    if not positional:
+        print(main.__doc__)
+        sys.exit(1)
 
-    jd = pathlib.Path(file_arg).read_text(encoding="utf-8")
-    res = asyncio.run(discover(jd, mock=mock))
+    # first positional: a JD file path if it exists, otherwise literal JD text
+    jd_arg = pathlib.Path(positional[0])
+    jd = jd_arg.read_text(encoding="utf-8") if jd_arg.is_file() else positional[0]
+    location = positional[1] if len(positional) > 1 else ""
+
+    res = asyncio.run(discover(jd, location, mock=mock, max_hits=max_hits))
 
     if urls_only:
         # plain list of links: prints to terminal, or `> links.txt` to save to a file
@@ -38,7 +49,8 @@ def main() -> None:
     print(f"\n=== LLM #1 (source: {src}) ===")
     print("Role titles :", ", ".join(s.role_titles) or "—")
     print("Must have   :", ", ".join(s.must_have) or "—")
-    print("Locations   :", ", ".join(s.locations) or "(remote/none)")
+    print("Seniority   :", s.seniority or "—")
+    print("Location    :", s.location or "(none)")
     print("\nQueries:")
     for i, q in enumerate(s.boolean_queries, 1):
         print(f"  {i}. {q}")
