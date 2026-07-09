@@ -33,7 +33,8 @@ async def discover(jd: str, mock: bool = False, max_hits: int = 50) -> Discovery
                 it["found_by_query"] = q
             raw_all.extend(items)
         except Exception as err:  # noqa: BLE001 - keep going on a single bad query
-            print(f"[serper] query failed, skipping: {q}\n  {err}")
+            import sys
+            print(f"[serper] query failed, skipping: {q}\n  {err}", file=sys.stderr)
 
     # 3) Normalize: filter to /in/ + dedup across all queries
     hits = dedupe_to_hits(raw_all)[:max_hits]
@@ -43,3 +44,12 @@ async def discover(jd: str, mock: bool = False, max_hits: int = 50) -> Discovery
         hits=hits,
         stats={"queries": len(queries), "raw": len(raw_all), "hits": len(hits)},
     )
+
+
+async def discover_urls(jd: str, mock: bool = False, max_hits: int = 50) -> list[str]:
+    """Same pipeline, but returns ONLY the profile URLs (list of strings).
+
+    This is what the scraper stage consumes: a plain list of links, nothing else.
+    """
+    result = await discover(jd, mock=mock, max_hits=max_hits)
+    return [hit.profile_url for hit in result.hits]
