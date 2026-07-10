@@ -2,10 +2,12 @@ import re
 
 from bs4 import BeautifulSoup, Comment
 
-_DROP = [
-    "script", "style", "head", "noscript", "template", "svg", "iframe",
-    "code", "nav", "footer", "aside", "form", "button",
-]
+_NOISE_BLOCK_RE = re.compile(
+    r"<(script|style|code|template|svg|noscript)\b[^>]*>.*?</\1\s*>",
+    re.IGNORECASE | re.DOTALL,
+)
+
+_DROP_CHROME = ["head", "nav", "footer", "aside", "form", "button", "iframe"]
 
 
 def clean_html(html: str) -> str:
@@ -18,9 +20,11 @@ def clean_html(html: str) -> str:
     if not html or not html.strip():
         return ""
 
-    soup = BeautifulSoup(html, "html.parser")
+    html = _NOISE_BLOCK_RE.sub(" ", html)
 
-    for tag in soup(_DROP):
+    soup = BeautifulSoup(html, "html5lib")
+
+    for tag in soup(_DROP_CHROME):
         tag.decompose()
 
     for comment in soup.find_all(string=lambda s: isinstance(s, Comment)):
