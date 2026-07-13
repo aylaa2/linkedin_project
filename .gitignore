@@ -10,3 +10,6 @@ __pycache__/
 
 # os junk
 .DS_Store
+
+# scraped data junk
+*profile_html/
