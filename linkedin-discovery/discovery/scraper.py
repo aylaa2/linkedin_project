@@ -308,9 +308,10 @@ def scrape_rapidapi(url):
 def fetch_scraperapi(url):
     if not has_scraperapi():
         return "", "ERR"
-    for extra in ({"render": "true", "ultra_premium": "true"},
+    for extra in ({},
+                  {"render": "true"},
                   {"render": "true", "premium": "true"},
-                  {"render": "true"}):
+                  {"render": "true", "ultra_premium": "true"}):
         params = {"api_key": SCRAPERAPI_KEY, "url": url, "country_code": "us"}
         params.update(extra)
         try:
@@ -411,6 +412,17 @@ def _index(items, mapper):
         mp = mapper(it)
         if mp.get("url"):
             idx[_slug(mp["url"])] = mp
+        # Indexeaza si dupa URL-ul original/de input pentru a tolera redirecturile de la LinkedIn
+        if isinstance(it, dict):
+            for k in ("input_url", "inputUrl", "id"):
+                val = it.get(k)
+                if isinstance(val, str) and val:
+                    idx[_slug(val)] = mp
+            orig_q = it.get("originalQuery")
+            if isinstance(orig_q, dict):
+                val = orig_q.get("url")
+                if isinstance(val, str) and val:
+                    idx[_slug(val)] = mp
     return idx
 
 
@@ -433,6 +445,8 @@ def _batch(nume_sursa, hits, scrape_fn, mapper, date, partial):
     if items and cu == 0:
         try:
             print(f"[{nume_sursa}] chei in primul item: {list(items[0].keys())[:20]}")
+            if isinstance(items[0], dict) and "error" in items[0]:
+                print(f"[{nume_sursa}] eroare item: {items[0]['error']}")
         except Exception:
             pass
     ramase = []
