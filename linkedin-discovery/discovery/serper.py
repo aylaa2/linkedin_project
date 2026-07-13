@@ -1,3 +1,5 @@
+import asyncio
+
 import httpx
 
 from .config import SERPER_API_KEY, SERP_PAGES, SERP_GL, SERP_HL, has_serper
@@ -15,11 +17,16 @@ async def serper_search(
 
     Returns raw organic items: {"link", "title", "snippet"}.
 
+    Fallback: daca NU exista SERPER_API_KEY, cauta GRATIS prin ddgs (DuckDuckGo).
+    Doar `--dry-run` (mock=True) foloseste rezultate fixe.
+
     To swap in SerpApi: change URL/params here and map its
     organic_results[].{link,title,snippet} — nothing else in the pipeline changes.
     """
-    if mock or not has_serper():
+    if mock:
         return _mock(query)
+    if not has_serper():
+        return await asyncio.to_thread(_ddgs_search, query, pages or SERP_PAGES)
 
     pages = pages or SERP_PAGES
     out: list[dict] = []
@@ -44,6 +51,30 @@ async def serper_search(
             if len(organic) < 10:  # no more pages
                 break
     return out
+
+
+def _ddgs_search(query: str, pages: int) -> list[dict]:
+    """Fallback GRATIS prin ddgs (DuckDuckGo) cand nu ai cheie Serper.
+    Ruleaza sincron intr-un thread separat (vezi asyncio.to_thread mai sus)."""
+    try:
+        from ddgs import DDGS
+    except ImportError:
+        try:
+            from duckduckgo_search import DDGS
+        except ImportError:
+            return _mock(query)
+    out: list[dict] = []
+    try:
+        with DDGS() as d:
+            for it in d.text(query, max_results=max(30, pages * 10)):
+                out.append({
+                    "link": it.get("href") or it.get("url") or it.get("link"),
+                    "title": it.get("title", ""),
+                    "snippet": it.get("body") or it.get("snippet", ""),
+                })
+    except Exception:
+        return _mock(query)
+    return out or _mock(query)
 
 
 def _mock(query: str) -> list[dict]:
