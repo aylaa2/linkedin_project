@@ -48,6 +48,7 @@ class Profile(BaseModel):
     education: list[str] = Field(default_factory=list)
     location: str = ""
     source: str = ""  # apify / rapidapi / scraperapi / (gol = doar din discovery)
+    raw_html: str = ""
 
 
 # ----------------------------- Helperi de mapare -----------------------------
@@ -390,17 +391,17 @@ def _are_date(d):
 
 def _fallback_unul(hit):
     """Pentru UN profil: RapidAPI -> ScraperAPI, pana obtine experienta/educatie.
-    Returneaza (profile_url, data, sursa)."""
+    Returneaza (profile_url, data, sursa, raw_html)."""
     if has_rapidapi():
         mp = scrape_rapidapi(hit.profile_url)
         if _are_date(mp):
-            return hit.profile_url, mp, "rapidapi"
+            return hit.profile_url, mp, "rapidapi", ""
     if has_scraperapi():
         html, _ = fetch_scraperapi(hit.profile_url)
         d = extrage_detalii(html)
         if _are_date(d):
-            return hit.profile_url, d, "scraperapi"
-    return hit.profile_url, None, ""
+            return hit.profile_url, d, "scraperapi", html
+    return hit.profile_url, None, "", ""
 
 
 def _index(items, mapper):
@@ -467,9 +468,9 @@ def enrich(hits, workers=8):
     if ramase and (has_rapidapi() or has_scraperapi()):
         ok_r = ok_s = 0
         with ThreadPoolExecutor(max_workers=min(workers, len(ramase))) as ex:
-            for url, d, sursa in ex.map(_fallback_unul, ramase):
+            for url, d, sursa, raw_html in ex.map(_fallback_unul, ramase):
                 if _are_date(d):
-                    date[url] = (d, sursa)
+                    date[url] = (d, sursa, raw_html)
                     ok_r += (sursa == "rapidapi")
                     ok_s += (sursa == "scraperapi")
         print(f"[fallback] din {len(ramase)} ramase -> RapidAPI:{ok_r} ScraperAPI:{ok_s} "
@@ -479,9 +480,9 @@ def enrich(hits, workers=8):
     profiles = []
     for h in hits:
         if h.profile_url in date:
-            data, sursa = date[h.profile_url]
+            data, sursa, raw_html = date[h.profile_url]
         else:
-            data, sursa = partial.get(h.profile_url, {}), ""
+            data, sursa, raw_html = partial.get(h.profile_url, {}), "", ""
         nume = data.get("nume") or _nume_din_title(h.title) or _nume_din_slug(_slug_hit(h))
         profiles.append(Profile(
             profile_url=h.profile_url,
@@ -492,6 +493,7 @@ def enrich(hits, workers=8):
             education=data.get("educatie", []),
             location=data.get("locatie", ""),
             source=sursa,
+            raw_html=raw_html,
         ))
     cu_exp = sum(1 for p in profiles if p.experience or p.education)
     print(f"[total] {cu_exp}/{len(profiles)} profile au experienta/educatie")
@@ -556,4 +558,11 @@ def render_html(profiles, out_dir="profile_html"):
         with open(cale, "w", encoding="utf-8") as f:
             f.write(doc)
         cai.append(cale)
+        
+        # Daca avem HTML original (raw) de la ScraperAPI, il salvam separat
+        if getattr(p, "raw_html", ""):
+            cale_raw = os.path.join(out_dir, f"{i:02d}_{slug}_raw.html")
+            with open(cale_raw, "w", encoding="utf-8") as f:
+                f.write(p.raw_html)
+            cai.append(cale_raw)
     return cai
