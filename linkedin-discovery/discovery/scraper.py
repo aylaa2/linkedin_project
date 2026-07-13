@@ -455,7 +455,7 @@ def _batch(nume_sursa, hits, scrape_fn, mapper, date, partial):
         if mp:
             partial.setdefault(h.profile_url, mp)
         if mp and _are_date(mp):
-            date[h.profile_url] = (mp, nume_sursa)
+            date[h.profile_url] = (mp, nume_sursa, "")
         else:
             ramase.append(h)
     return ramase
