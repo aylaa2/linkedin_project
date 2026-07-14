@@ -1,15 +1,19 @@
 import csv
+import os
 import re
 import threading
 import webbrowser
 from pathlib import Path
 from tkinter import filedialog, messagebox
+from dotenv import load_dotenv
 
 import customtkinter as ctk
 import requests
 
+load_dotenv()
 
-API_URL = "http://127.0.0.1:8000/api/discover"
+API_URL = os.getenv("UVICORN_API", "")
+print(f"Using API URL: {API_URL}")
 
 
 SKILL_KEYWORDS = [
