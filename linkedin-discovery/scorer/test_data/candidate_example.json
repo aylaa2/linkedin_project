@@ -1,0 +1,21 @@
+{
+  "profile_url": "https://www.linkedin.com/in/example",
+  "name": "Candidate Example",
+  "headline": "Backend Software Engineer | Python | FastAPI | AWS",
+  "location": "Dublin, Ireland",
+  "years_experience": 3,
+  "skills": [
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker",
+    "AWS",
+    "Git"
+  ],
+  "current_title": "Backend Software Engineer",
+  "current_company": "Example Company",
+  "education": [
+    "BSc in Computer Science"
+  ],
+  "summary": "Backend engineer experienced in REST APIs, cloud deployments and relational databases."
+}

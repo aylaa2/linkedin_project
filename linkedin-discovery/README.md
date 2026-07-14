@@ -16,8 +16,9 @@ clean deduplicated LinkedIn profile URLs that flow **down into the
                                               ▼
                           Normalize + validate                ← next box
                                               ▼
-                          Intelligence plane: Filter · Rank · Review
-```
+┌─ Intelligence plane: Filter · Rank · Review ────────────────┐
+│  BGE-M3 Semantic Reranker → Llama 3.3 Evaluation → Scoring  │
+└─────────────────────────────────────────────────────────────┘
 
 Stack: **Python**, **pydantic-ai**, **Groq (Llama 3.3 70B)**, async (`httpx`),
 served by **FastAPI**. Output is Pydantic models / a JSON list of URLs.
@@ -86,6 +87,27 @@ Discovery does only **cheap hygiene**: keep `/in/` URLs, dedup by canonical URL.
 `Normalize + validate` box — it has both the Serper `snippet` and the scraped
 HTML. So this box deliberately does **not** parse names; it hands over
 `title` + `snippet` raw.
+
+## The handoff contract (into Intelligence plane)
+
+Once the `Normalize + validate` box finishes converting raw scraped HTML into `Candidate` Pydantic models (defined in `parse/models.py`), it hands them off to the **Candidate Scorer**.
+
+The scorer exposes a single, decoupled entrypoint `process_candidates_pipeline()`:
+
+```python
+from scorer.candidate_scorer import process_candidates_pipeline
+
+# Pipeline:
+# 1. Local Semantic Reranking (FlagEmbedding BGE-M3) keeps only top candidates.
+# 2. LLM Evaluation (Groq Llama 3.3) extracts requirements and scores semantically.
+# 3. Deterministic Heuristics calculate exact skill and experience math.
+results = process_candidates_pipeline(
+    recruiter_requirement="JD text here...",
+    candidates=[candidate_1, candidate_2, ...]
+)
+# Returns a list of `CandidateScoreResult` containing full score breakdowns.
+```
+
 
 ## Design notes
 

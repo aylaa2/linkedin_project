@@ -1,0 +1,449 @@
+[
+  {
+    "candidate_name": "Alex Morgan",
+    "profile_url": "https://www.linkedin.com/in/alex-morgan-backend",
+    "evaluation_status": "FULL_EVALUATION",
+    "reranker_score": 0.947,
+    "final_score": 96.12,
+    "heuristic_score": 95.5,
+    "holistic_llm_score": 98.0,
+    "component_scores": {
+      "skills": 90.0,
+      "experience": 100.0,
+      "title": 100.0,
+      "location": 100.0,
+      "education": 100.0,
+      "profile_quality": 100.0
+    },
+    "extracted_requirements": {
+      "required_skills": [
+        "Python",
+        "FastAPI sau Django",
+        "PostgreSQL",
+        "experiență cu REST APIs",
+        "Docker"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Kubernetes"
+      ],
+      "minimum_years_experience": 3,
+      "target_titles": [
+        "Backend Software Engineer"
+      ],
+      "preferred_locations": [
+        "Dublin",
+        "Irlanda"
+      ],
+      "education_requirements": [
+        "Studii superioare în informatică"
+      ]
+    },
+    "matched_strengths": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "experiență cu REST APIs",
+      "Skill match: Python -> Python",
+      "Skill match: FastAPI sau Django -> FastAPI",
+      "Skill match: PostgreSQL -> PostgreSQL",
+      "Skill match: experiență cu REST APIs -> REST APIs",
+      "Skill match: Docker -> Docker",
+      "Skill match: AWS -> AWS"
+    ],
+    "missing_requirements": [],
+    "explanation": "Candidatul a fost evaluat ca fiind o potrivire excelentă pentru cerințele jobului. Acesta posedă toate skill-urile obligatorii menționate și are o experiență relevantă de 4 ani în poziția de Backend Software Engineer. De asemenea, candidatul are o educație superioară în informatică și este localizat în Dublin, ceea ce îndeplinește cerințele de locație. Prin urmare, scorul de potrivire holistic este ridicat."
+  },
+  {
+    "candidate_name": "Emma Kelly",
+    "profile_url": "https://www.linkedin.com/in/emma-kelly-cloud",
+    "evaluation_status": "FULL_EVALUATION",
+    "reranker_score": 0.2501,
+    "final_score": 90.25,
+    "heuristic_score": 92.0,
+    "holistic_llm_score": 85.0,
+    "component_scores": {
+      "skills": 90.0,
+      "experience": 100.0,
+      "title": 80.0,
+      "location": 100.0,
+      "education": 100.0,
+      "profile_quality": 90.0
+    },
+    "extracted_requirements": {
+      "required_skills": [
+        "Python",
+        "FastAPI sau Django",
+        "PostgreSQL",
+        "experiență cu REST APIs",
+        "Docker"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Kubernetes"
+      ],
+      "minimum_years_experience": 3,
+      "target_titles": [
+        "Backend Software Engineer"
+      ],
+      "preferred_locations": [
+        "Dublin",
+        "remote din Irlanda"
+      ],
+      "education_requirements": [
+        "studii superioare în informatică"
+      ]
+    },
+    "matched_strengths": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "experiență cu REST APIs",
+      "Docker",
+      "AWS",
+      "Skill match: Python -> Python",
+      "Skill match: FastAPI sau Django -> FastAPI",
+      "Skill match: PostgreSQL -> PostgreSQL",
+      "Skill match: experiență cu REST APIs -> REST APIs",
+      "Skill match: Docker -> Docker",
+      "Skill match: AWS -> AWS"
+    ],
+    "missing_requirements": [
+      "Django (nu este necesar, dar FastAPI este menționat în skill-uri)",
+      "experiență directă cu Kubernetes nu este prezentă în profil"
+    ],
+    "explanation": "Candidatul are majoritatea skill-urilor și experienței cerute. Există o potrivire semantică ridicată între titlul și experiența sa, precum și locația. Profile-ul candidatului conține dovezi relevante pentru cerințele obligatorii."
+  },
+  {
+    "candidate_name": "Karim Hassan",
+    "profile_url": "https://www.linkedin.com/in/karim-hassan-backend",
+    "evaluation_status": "FULL_EVALUATION",
+    "reranker_score": 0.9196,
+    "final_score": 82.75,
+    "heuristic_score": 87.0,
+    "holistic_llm_score": 70.0,
+    "component_scores": {
+      "skills": 90.0,
+      "experience": 100.0,
+      "title": 80.0,
+      "location": 0.0,
+      "education": 100.0,
+      "profile_quality": 90.0
+    },
+    "extracted_requirements": {
+      "required_skills": [
+        "Python",
+        "FastAPI sau Django",
+        "PostgreSQL",
+        "experiență cu REST APIs",
+        "Docker"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Kubernetes"
+      ],
+      "minimum_years_experience": 3,
+      "target_titles": [
+        "Backend Software Engineer"
+      ],
+      "preferred_locations": [
+        "Dublin",
+        "Irlanda"
+      ],
+      "education_requirements": [
+        "studii superioare în informatică"
+      ]
+    },
+    "matched_strengths": [
+      "Python",
+      "Django",
+      "PostgreSQL",
+      "Docker",
+      "experiență cu REST APIs",
+      "Kubernetes",
+      "Skill match: Python -> Python",
+      "Skill match: FastAPI sau Django -> Django",
+      "Skill match: PostgreSQL -> PostgreSQL",
+      "Skill match: experiență cu REST APIs -> REST APIs",
+      "Skill match: Docker -> Docker",
+      "Skill match: Kubernetes -> Kubernetes"
+    ],
+    "missing_requirements": [
+      "FastAPI",
+      "locatie în Dublin sau Irlanda"
+    ],
+    "explanation": "Candidatul are majoritatea skill-urilor cerute și o experiență relevantă de 5 ani. Lipsa experienței cu FastAPI și locația în Londra, în afară de Dublin sau Irlanda, reduc scorul general de potrivire."
+  },
+  {
+    "candidate_name": "Noah Williams",
+    "profile_url": "https://www.linkedin.com/in/noah-williams-fullstack",
+    "evaluation_status": "FULL_EVALUATION",
+    "reranker_score": 0.2004,
+    "final_score": 61.12,
+    "heuristic_score": 61.5,
+    "holistic_llm_score": 60.0,
+    "component_scores": {
+      "skills": 50.0,
+      "experience": 100.0,
+      "title": 0.0,
+      "location": 100.0,
+      "education": 100.0,
+      "profile_quality": 80.0
+    },
+    "extracted_requirements": {
+      "required_skills": [
+        "Python",
+        "FastAPI",
+        "Django",
+        "PostgreSQL",
+        "experiență cu REST APIs",
+        "Docker"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Kubernetes"
+      ],
+      "minimum_years_experience": 3,
+      "target_titles": [
+        "Backend Software Engineer"
+      ],
+      "preferred_locations": [
+        "Dublin",
+        "Irlanda"
+      ],
+      "education_requirements": [
+        "Studii superioare în informatică"
+      ]
+    },
+    "matched_strengths": [
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "experiență cu REST APIs",
+      "Skill match: PostgreSQL -> PostgreSQL",
+      "Skill match: experiență cu REST APIs -> REST APIs",
+      "Skill match: Docker -> Docker",
+      "Skill match: AWS -> AWS"
+    ],
+    "missing_requirements": [
+      "Python",
+      "FastAPI",
+      "Django",
+      "experiență ca Backend Software Engineer",
+      "Required skill missing: Python",
+      "Required skill missing: FastAPI",
+      "Required skill missing: Django"
+    ],
+    "explanation": "Candidatul are o experiență relevantă în domeniul IT, dar nu are experiență directă cu tehnologiile necesare pentru acest post, cum ar fi Python și FastAPI/Django. De asemenea, titlul său curent nu corespunde cerinței. Locația și educația sa sunt însă compatibile cu cerințele."
+  },
+  {
+    "candidate_name": "Daniel Smith",
+    "profile_url": "https://www.linkedin.com/in/daniel-smith-java",
+    "evaluation_status": "FULL_EVALUATION",
+    "reranker_score": 0.6152,
+    "final_score": 59.5,
+    "heuristic_score": 66.0,
+    "holistic_llm_score": 40.0,
+    "component_scores": {
+      "skills": 60.0,
+      "experience": 100.0,
+      "title": 0.0,
+      "location": 100.0,
+      "education": 100.0,
+      "profile_quality": 80.0
+    },
+    "extracted_requirements": {
+      "required_skills": [
+        "Python",
+        "FastAPI",
+        "Django",
+        "PostgreSQL",
+        "REST APIs",
+        "Docker"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Kubernetes"
+      ],
+      "minimum_years_experience": 3,
+      "target_titles": [
+        "Backend Software Engineer"
+      ],
+      "preferred_locations": [
+        "Dublin",
+        "Ireland"
+      ],
+      "education_requirements": [
+        "Studii superioare în informatică"
+      ]
+    },
+    "matched_strengths": [
+      "PostgreSQL",
+      "Docker",
+      "REST APIs",
+      "Kubernetes",
+      "AWS",
+      "Skill match: PostgreSQL -> PostgreSQL",
+      "Skill match: REST APIs -> REST APIs",
+      "Skill match: Docker -> Docker",
+      "Skill match: AWS -> AWS",
+      "Skill match: Kubernetes -> Kubernetes"
+    ],
+    "missing_requirements": [
+      "Python",
+      "FastAPI",
+      "Django",
+      "Required skill missing: Python",
+      "Required skill missing: FastAPI",
+      "Required skill missing: Django"
+    ],
+    "explanation": "Candidatul are o experiență relevantă în dezvoltarea de software, dar nu îndeplinește toate cerințele obligatorii. Lipsa de experiență în Python, FastAPI și Django afectează scorul general. Pe de altă parte, poseda skill-urile PostgreSQL, Docker, REST APIs, Kubernetes și AWS, care constituie avantaje. Locația din Irlanda și studiile superioare în informatică reprezintă puncte forte."
+  },
+  {
+    "candidate_name": "Maria Ionescu",
+    "profile_url": "https://www.linkedin.com/in/maria-ionescu-ml",
+    "evaluation_status": "FULL_EVALUATION",
+    "reranker_score": 0.2923,
+    "final_score": 58.5,
+    "heuristic_score": 58.0,
+    "holistic_llm_score": 60.0,
+    "component_scores": {
+      "skills": 53.33,
+      "experience": 100.0,
+      "title": 0.0,
+      "location": 0.0,
+      "education": 100.0,
+      "profile_quality": 80.0
+    },
+    "extracted_requirements": {
+      "required_skills": [
+        "Python",
+        "FastAPI",
+        "Django",
+        "PostgreSQL",
+        "REST APIs",
+        "Docker"
+      ],
+      "preferred_skills": [
+        "AWS",
+        "Kubernetes"
+      ],
+      "minimum_years_experience": 3,
+      "target_titles": [
+        "Backend Software Engineer"
+      ],
+      "preferred_locations": [
+        "Dublin",
+        "Irlanda"
+      ],
+      "education_requirements": [
+        "Studii superioare în informatică"
+      ]
+    },
+    "matched_strengths": [
+      "Python",
+      "FastAPI",
+      "Docker",
+      "PostgreSQL",
+      "Skill match: Python -> Python",
+      "Skill match: FastAPI -> FastAPI",
+      "Skill match: PostgreSQL -> PostgreSQL",
+      "Skill match: Docker -> Docker"
+    ],
+    "missing_requirements": [
+      "Django",
+      "experiență cu REST APIs",
+      "locatie în Dublin sau remote din Irlanda",
+      "experiență de minimum 3 ani în Backend Software Engineering",
+      "Required skill missing: Django",
+      "Required skill missing: REST APIs"
+    ],
+    "explanation": "Candidatul are skill-uri și experiență relevantă în domeniul dezvoltării software, dar are un titlu și o experiență profesională care nu se potrivesc exact cu cerințele jobului. De asemenea, locația candidatului nu se regăsește printre preferințele recrutorului."
+  },
+  {
+    "candidate_name": "Liam O'Brien",
+    "profile_url": "https://www.linkedin.com/in/liam-obrien-devops",
+    "evaluation_status": "SKIPPED_BY_RERANKER",
+    "reranker_score": 0.118,
+    "final_score": null,
+    "heuristic_score": null,
+    "holistic_llm_score": null,
+    "component_scores": null,
+    "extracted_requirements": null,
+    "matched_strengths": null,
+    "missing_requirements": null,
+    "explanation": null
+  },
+  {
+    "candidate_name": "Andrei Marinescu",
+    "profile_url": "https://www.linkedin.com/in/andrei-marinescu-junior",
+    "evaluation_status": "SKIPPED_BY_RERANKER",
+    "reranker_score": 0.0843,
+    "final_score": null,
+    "heuristic_score": null,
+    "holistic_llm_score": null,
+    "component_scores": null,
+    "extracted_requirements": null,
+    "matched_strengths": null,
+    "missing_requirements": null,
+    "explanation": null
+  },
+  {
+    "candidate_name": "Sofia Petrescu",
+    "profile_url": "https://www.linkedin.com/in/sofia-petrescu-frontend",
+    "evaluation_status": "SKIPPED_BY_RERANKER",
+    "reranker_score": 0.0058,
+    "final_score": null,
+    "heuristic_score": null,
+    "holistic_llm_score": null,
+    "component_scores": null,
+    "extracted_requirements": null,
+    "matched_strengths": null,
+    "missing_requirements": null,
+    "explanation": null
+  },
+  {
+    "candidate_name": "Elena Popescu",
+    "profile_url": "https://www.linkedin.com/in/elena-popescu-data",
+    "evaluation_status": "SKIPPED_BY_RERANKER",
+    "reranker_score": 0.0058,
+    "final_score": null,
+    "heuristic_score": null,
+    "holistic_llm_score": null,
+    "component_scores": null,
+    "extracted_requirements": null,
+    "matched_strengths": null,
+    "missing_requirements": null,
+    "explanation": null
+  },
+  {
+    "candidate_name": "Victor Radu",
+    "profile_url": "https://www.linkedin.com/in/victor-radu-cybersecurity",
+    "evaluation_status": "SKIPPED_BY_RERANKER",
+    "reranker_score": 0.0048,
+    "final_score": null,
+    "heuristic_score": null,
+    "holistic_llm_score": null,
+    "component_scores": null,
+    "extracted_requirements": null,
+    "matched_strengths": null,
+    "missing_requirements": null,
+    "explanation": null
+  },
+  {
+    "candidate_name": "Grace Murphy",
+    "profile_url": "https://www.linkedin.com/in/grace-murphy-product",
+    "evaluation_status": "SKIPPED_BY_RERANKER",
+    "reranker_score": 0.0045,
+    "final_score": null,
+    "heuristic_score": null,
+    "holistic_llm_score": null,
+    "component_scores": null,
+    "extracted_requirements": null,
+    "matched_strengths": null,
+    "missing_requirements": null,
+    "explanation": null
+  }
+]

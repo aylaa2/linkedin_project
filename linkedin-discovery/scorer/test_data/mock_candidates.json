@@ -1,0 +1,283 @@
+[
+  {
+    "profile_url": "https://www.linkedin.com/in/alex-morgan-backend",
+    "name": "Alex Morgan",
+    "headline": "Backend Software Engineer | Python | FastAPI | AWS",
+    "location": "Dublin, Ireland",
+    "years_experience": 4,
+    "skills": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "REST APIs",
+      "Git",
+      "Redis"
+    ],
+    "current_title": "Backend Software Engineer",
+    "current_company": "CloudWorks",
+    "education": [
+      "BSc in Computer Science, Trinity College Dublin"
+    ],
+    "summary": "Backend engineer focused on scalable APIs, cloud deployment and relational databases."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/maria-ionescu-ml",
+    "name": "Maria Ionescu",
+    "headline": "Machine Learning Engineer | Python | NLP | LLMs",
+    "location": "Bucharest, Romania",
+    "years_experience": 3,
+    "skills": [
+      "Python",
+      "PyTorch",
+      "TensorFlow",
+      "Natural Language Processing",
+      "Large Language Models",
+      "FastAPI",
+      "Docker",
+      "PostgreSQL"
+    ],
+    "current_title": "Machine Learning Engineer",
+    "current_company": "DataVision AI",
+    "education": [
+      "MSc in Artificial Intelligence, University of Bucharest",
+      "BSc in Computer Science"
+    ],
+    "summary": "ML engineer experienced in NLP systems, model deployment and API integration."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/daniel-smith-java",
+    "name": "Daniel Smith",
+    "headline": "Senior Java Developer | Spring Boot | Microservices",
+    "location": "Cork, Ireland",
+    "years_experience": 7,
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "Microservices",
+      "PostgreSQL",
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "REST APIs"
+    ],
+    "current_title": "Senior Software Engineer",
+    "current_company": "FinCore Systems",
+    "education": [
+      "BEng in Software Engineering"
+    ],
+    "summary": "Senior backend developer building distributed Java services for financial platforms."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/sofia-petrescu-frontend",
+    "name": "Sofia Petrescu",
+    "headline": "Frontend Developer | React | TypeScript",
+    "location": "Cluj-Napoca, Romania",
+    "years_experience": 2,
+    "skills": [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Redux",
+      "Git",
+      "REST APIs"
+    ],
+    "current_title": "Frontend Developer",
+    "current_company": "PixelCraft",
+    "education": [
+      "BSc in Information Technology"
+    ],
+    "summary": "Frontend developer creating responsive web applications with React and TypeScript."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/liam-obrien-devops",
+    "name": "Liam O'Brien",
+    "headline": "DevOps Engineer | AWS | Kubernetes | Terraform",
+    "location": "Dublin, Ireland",
+    "years_experience": 5,
+    "skills": [
+      "AWS",
+      "Kubernetes",
+      "Docker",
+      "Terraform",
+      "Jenkins",
+      "GitHub Actions",
+      "Linux",
+      "Python",
+      "Continuous Integration",
+      "Continuous Delivery"
+    ],
+    "current_title": "DevOps Engineer",
+    "current_company": "InfraScale",
+    "education": [
+      "BSc in Computer Networks"
+    ],
+    "summary": "DevOps engineer specializing in cloud infrastructure, automation and deployment pipelines."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/elena-popescu-data",
+    "name": "Elena Popescu",
+    "headline": "Data Analyst | SQL | Power BI | Python",
+    "location": "Timisoara, Romania",
+    "years_experience": 3,
+    "skills": [
+      "SQL",
+      "Python",
+      "Power BI",
+      "Tableau",
+      "Excel",
+      "Pandas",
+      "Data Visualization",
+      "PostgreSQL"
+    ],
+    "current_title": "Data Analyst",
+    "current_company": "InsightHub",
+    "education": [
+      "BSc in Statistics and Economic Informatics"
+    ],
+    "summary": "Data analyst experienced in dashboards, reporting and business data analysis."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/noah-williams-fullstack",
+    "name": "Noah Williams",
+    "headline": "Full Stack Engineer | Node.js | React | PostgreSQL",
+    "location": "Galway, Ireland",
+    "years_experience": 4,
+    "skills": [
+      "Node.js",
+      "React",
+      "TypeScript",
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "REST APIs",
+      "GraphQL"
+    ],
+    "current_title": "Full Stack Software Engineer",
+    "current_company": "BuildFlow",
+    "education": [
+      "BSc in Software Development"
+    ],
+    "summary": "Full stack engineer building web platforms with Node.js, React and PostgreSQL."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/andrei-marinescu-junior",
+    "name": "Andrei Marinescu",
+    "headline": "Junior Backend Developer | Python | Django",
+    "location": "Bucharest, Romania",
+    "years_experience": 1,
+    "skills": [
+      "Python",
+      "Django",
+      "SQLite",
+      "Git",
+      "REST APIs",
+      "HTML",
+      "CSS"
+    ],
+    "current_title": "Junior Backend Developer",
+    "current_company": "StartSoft",
+    "education": [
+      "BSc in Computer Science, in progress"
+    ],
+    "summary": "Junior developer with experience building small Django applications and REST endpoints."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/emma-kelly-cloud",
+    "name": "Emma Kelly",
+    "headline": "Cloud Software Engineer | Python | AWS | Serverless",
+    "location": "Remote, Ireland",
+    "years_experience": 6,
+    "skills": [
+      "Python",
+      "AWS",
+      "Lambda",
+      "DynamoDB",
+      "FastAPI",
+      "Docker",
+      "Terraform",
+      "PostgreSQL",
+      "REST APIs"
+    ],
+    "current_title": "Cloud Software Engineer",
+    "current_company": "Nimbus Technologies",
+    "education": [
+      "MSc in Cloud Computing",
+      "BSc in Computer Science"
+    ],
+    "summary": "Cloud engineer designing serverless systems and production APIs on AWS."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/victor-radu-cybersecurity",
+    "name": "Victor Radu",
+    "headline": "Cybersecurity Analyst | SOC | SIEM | Incident Response",
+    "location": "Brasov, Romania",
+    "years_experience": 2,
+    "skills": [
+      "Cybersecurity",
+      "SIEM",
+      "Splunk",
+      "Incident Response",
+      "Linux",
+      "Python",
+      "Network Security",
+      "SOC"
+    ],
+    "current_title": "Cybersecurity Analyst",
+    "current_company": "SecureNet",
+    "education": [
+      "BSc in Cybersecurity"
+    ],
+    "summary": "Security analyst monitoring threats, investigating alerts and supporting incident response."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/grace-murphy-product",
+    "name": "Grace Murphy",
+    "headline": "Technical Product Manager | SaaS | Agile",
+    "location": "Dublin, Ireland",
+    "years_experience": 8,
+    "skills": [
+      "Product Management",
+      "Agile",
+      "Scrum",
+      "SaaS",
+      "Roadmapping",
+      "Stakeholder Management",
+      "Jira",
+      "Data Analysis"
+    ],
+    "current_title": "Senior Technical Product Manager",
+    "current_company": "ProductBridge",
+    "education": [
+      "MBA",
+      "BSc in Information Systems"
+    ],
+    "summary": "Technical product manager leading cross-functional teams and SaaS product strategy."
+  },
+  {
+    "profile_url": "https://www.linkedin.com/in/karim-hassan-backend",
+    "name": "Karim Hassan",
+    "headline": "Software Engineer | Python | Django | PostgreSQL",
+    "location": "London, United Kingdom",
+    "years_experience": 5,
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL",
+      "Docker",
+      "Kubernetes",
+      "REST APIs",
+      "Celery",
+      "Redis"
+    ],
+    "current_title": "Software Engineer",
+    "current_company": "MarketStack",
+    "education": [
+      "BSc in Computer Engineering"
+    ],
+    "summary": "Backend engineer experienced in Django services, asynchronous processing and containerized systems."
+  }
+]
