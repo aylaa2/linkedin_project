@@ -555,7 +555,7 @@ class TalentScoutApp(ctk.CTk):
             "current_title",
             "location",
             "matched_skills",
-            "match_score",
+            "official_score",
             "source"
         ]
 
@@ -574,7 +574,7 @@ class TalentScoutApp(ctk.CTk):
                     "current_title": c.get("current_title", ""),
                     "location": c.get("location", ""),
                     "matched_skills": ", ".join(c.get("matched_skills", [])),
-                    "match_score": c.get("match_score", ""),
+                    "official_score": c.get("official_score", ""),
                     "source": c.get("source", "")
                 })
 
@@ -684,7 +684,7 @@ class TalentScoutApp(ctk.CTk):
         top.grid_columnconfigure(0, weight=1)
 
         name = candidate.get("full_name") or "Unknown candidate"
-        score = candidate.get("match_score", 0)
+        score = candidate.get("official_score")
 
         ctk.CTkLabel(
             top,
@@ -692,16 +692,17 @@ class TalentScoutApp(ctk.CTk):
             font=ctk.CTkFont(size=18, weight="bold")
         ).grid(row=0, column=0, sticky="w")
 
-        ctk.CTkLabel(
-            top,
-            text=f"{score}% match",
-            height=30,
-            corner_radius=15,
-            fg_color=get_score_color(score),
-            text_color="white",
-            font=ctk.CTkFont(size=13, weight="bold"),
-            padx=12
-        ).grid(row=0, column=1, sticky="e")
+        if score is not None:
+            ctk.CTkLabel(
+                top,
+                text=f"Score: {format_backend_score(score)}",
+                height=30,
+                corner_radius=15,
+                fg_color="#2563EB",
+                text_color="white",
+                font=ctk.CTkFont(size=13, weight="bold"),
+                padx=12
+            ).grid(row=0, column=1, sticky="e")
 
         title = candidate.get("current_title") or "No title detected"
         ctk.CTkLabel(
@@ -822,6 +823,7 @@ def normalize_candidates(raw_data, jd_skills):
             or raw_data.get("results")
             or raw_data.get("candidates")
             or raw_data.get("data")
+            or raw_data.get("value")
             or []
         )
     else:
@@ -840,6 +842,8 @@ def normalize_candidates(raw_data, jd_skills):
             or item.get("linkedin_url")
             or ""
         )
+
+        profile_url = clean_linkedin_url(profile_url)
 
         full_name = (
             item.get("name")
@@ -861,8 +865,8 @@ def normalize_candidates(raw_data, jd_skills):
 
         location = item.get("location") or item.get("city") or ""
 
-        experience = item.get("experience") or item.get("experienta") or []
-        education = item.get("education") or item.get("educatie") or []
+        experience = item.get("experience") or []
+        education = item.get("education") or []
 
         if isinstance(experience, str):
             experience = [experience]
@@ -883,16 +887,7 @@ def normalize_candidates(raw_data, jd_skills):
             if skill.lower() in text_blob:
                 matched_skills.append(skill)
 
-        score = compute_score(
-            {
-                "role": current_title,
-                "location": location,
-                "experience": experience,
-                "education": education
-            },
-            matched_skills,
-            jd_skills
-        )
+        backend_score = get_backend_score(item)
 
         normalized.append({
             "first_name": first_name,
@@ -906,13 +901,17 @@ def normalize_candidates(raw_data, jd_skills):
             "experience": experience,
             "education": education,
             "matched_skills": matched_skills,
-            "match_score": score,
+            "official_score": backend_score,
             "source": item.get("source") or "discovery"
         })
 
-    normalized.sort(key=lambda x: x.get("match_score", 0), reverse=True)
-    return normalized
+    if any(c.get("official_score") is not None for c in normalized):
+        normalized.sort(
+            key=lambda x: float(x.get("official_score") or 0),
+            reverse=True
+        )
 
+    return normalized
 
 def extract_name_from_title(title):
     if not title:
@@ -948,35 +947,77 @@ def split_name(full_name):
         return parts[0], ""
     return parts[0], " ".join(parts[1:])
 
+def get_backend_score(item):
+    possible_keys = [
+        "final_score",
+        "match_score",
+        "score",
+        "candidate_score",
+        "ranking_score",
+        "overall_score",
+    ]
 
-def compute_score(item, matched_skills, jd_skills):
-    score = 30
+    for key in possible_keys:
+        value = item.get(key)
+        if value is not None and value != "":
+            return value
 
-    if jd_skills:
-        score += int((len(matched_skills) / max(len(jd_skills), 1)) * 45)
+    nested_sources = [
+        item.get("scoring"),
+        item.get("scores"),
+        item.get("evaluation"),
+        item.get("ranking"),
+    ]
 
-    if item.get("role"):
-        score += 10
+    for source in nested_sources:
+        if isinstance(source, dict):
+            for key in possible_keys:
+                value = source.get(key)
+                if value is not None and value != "":
+                    return value
 
-    if item.get("location"):
-        score += 5
-
-    if item.get("experience"):
-        score += 7
-
-    if item.get("education"):
-        score += 3
-
-    return min(score, 100)
+    return None
 
 
-def get_score_color(score):
-    if score >= 80:
-        return "#16A34A"
-    if score >= 60:
-        return "#F59E0B"
-    return "#DC2626"
+def format_backend_score(score):
+    if score is None:
+        return ""
 
+    try:
+        numeric_score = float(score)
+
+        if numeric_score <= 1:
+            return f"{round(numeric_score * 100)}%"
+
+        if numeric_score <= 100:
+            return f"{round(numeric_score)}%"
+
+        return str(round(numeric_score, 2))
+
+    except Exception:
+        return str(score)
+    
+def clean_linkedin_url(url):
+    if not url:
+        return ""
+
+    url = url.strip()
+
+    # Normalize regional LinkedIn domains
+    url = url.replace("https://ro.linkedin.com", "https://www.linkedin.com")
+    url = url.replace("http://ro.linkedin.com", "https://www.linkedin.com")
+    url = url.replace("http://www.linkedin.com", "https://www.linkedin.com")
+
+    # Remove tracking parameters
+    url = url.split("?")[0]
+
+    # Keep only the clean /in/profile-slug format
+    if "/in/" in url:
+        slug = url.split("/in/")[-1].strip("/")
+        slug = slug.split("/")[0]
+        return f"https://www.linkedin.com/in/{slug}/"
+
+    return url
 
 if __name__ == "__main__":
     app = TalentScoutApp()
