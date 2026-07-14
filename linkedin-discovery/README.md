@@ -108,6 +108,11 @@ results = process_candidates_pipeline(
 # Returns a list of `CandidateScoreResult` containing full score breakdowns.
 ```
 
+### Configuration (Scorer)
+The Intelligence plane exposes several hardcoded levers in `scorer/reranker.py` that dictate how aggressively candidates are filtered before hitting the LLM:
+- `USE_RERANKER` (default: `True`): Toggles the local BGE-M3 semantic filtering. Setting this to `False` sends all candidates to Groq (slower, more expensive, but exhaustive).
+- `RERANKER_MIN_PROFILES` (default: `3`): Guarantees that the top N candidates will always be evaluated by Groq, regardless of their semantic score.
+- `RERANKER_THRESHOLD` (default: `0.2`): The minimum semantic similarity score a candidate must achieve to bypass the minimum profile limit and be evaluated.
 
 ## Design notes
 
@@ -146,6 +151,7 @@ results = process_candidates_pipeline(
    deeper pages) until the target is reached or the queries run dry.
    `stats.serp_pages` is the credits spent per search — log it so Miruna/Vali
    can budget end-to-end cost.
+4. **Scorer Reranking Optimization** — Experiment with `RERANKER_THRESHOLD` and `RERANKER_MIN_PROFILES` in `scorer/reranker.py`. A higher threshold saves Groq API tokens but risks aggressively filtering out "diamond in the rough" candidates. We need to find the sweet spot for the BGE-M3 model on Romanian IT resumes.
 
 > Note for the team: the diagram's Discovery plane says **Playwright + proxies**
 > for the scraper, while the original text spec said **ScraperAPI instead of
