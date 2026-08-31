@@ -3,12 +3,6 @@ from pydantic import BaseModel, Field
 
 
 class QuerySignals(BaseModel):
-    """Signals LLM #1 extracts from the JD + the Google queries built from them.
-
-    Keeping the signals separate from `boolean_queries` lets you rebuild/A-B
-    queries in code without re-prompting — useful for the prompt-design research.
-    `location` comes from the user's location input, not from the JD.
-    """
 
     role_titles: list[str] = Field(default_factory=list)
     must_have: list[str] = Field(default_factory=list)
@@ -19,13 +13,6 @@ class QuerySignals(BaseModel):
 
 
 class DiscoveryHit(BaseModel):
-    """One deduplicated LinkedIn profile found by the discovery adapter.
-
-    This is the handoff object into the `Normalize + validate` box. Discovery only
-    does cheap hygiene (filter to /in/, dedup). Semantic field extraction
-    (name/headline/experience) is that downstream box's job, from `title`/`snippet`
-    or the scraped HTML.
-    """
 
     profile_url: str
     canonical_key: str            # e.g. "linkedin.com/in/jane-doe-123456"

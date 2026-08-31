@@ -1,11 +1,3 @@
-"""FastAPI app for the discovery box.
-
-Run from linkedin-discovery/:
-    uvicorn discovery.api:app --reload
-
-GET  /              minimal web UI (job description + location inputs)
-POST /api/discover  {"jd": "...", "location": "..."} -> JSON list of enriched profile objects
-"""
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
@@ -17,7 +9,6 @@ from .scraper import enrich, render_html, Profile
 
 app = FastAPI(title="LinkedIn Discovery")
 
-# Serveste folderul profile_html ca fisiere statice
 os.makedirs("profile_html", exist_ok=True)
 app.mount("/profiles", StaticFiles(directory="profile_html"), name="profiles")
 
@@ -31,10 +22,10 @@ class DiscoverRequest(BaseModel):
 @app.post("/api/discover")
 async def api_discover(req: DiscoverRequest) -> list[Profile]:
     try:
-        # 1. Cauta URL-uri (Discovery)
+        # cauta URL-uri
         result = await discover(req.jd, req.location, max_hits=req.max_hits)
         
-        # 2. Extrage informatii complete (Scraping)
+        # extrage informatii complete
         profiles = enrich(result.hits)
         
         # 3. Salveaza fisierele HTML local in profile_html/

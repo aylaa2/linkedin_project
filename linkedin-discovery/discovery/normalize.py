@@ -4,7 +4,6 @@ from .models import DiscoveryHit
 
 
 def is_profile_url(url: str) -> bool:
-    """True only for personal profiles: …linkedin.com/in/<slug>."""
     try:
         u = urlparse(url)
     except Exception:
@@ -16,10 +15,6 @@ def is_profile_url(url: str) -> bool:
 
 
 def canonical_key(url: str) -> str:
-    """Dedup key: drop locale subdomain, tracking params, trailing slash.
-
-    ro.linkedin.com/in/jane-doe-123?trk=x  ->  linkedin.com/in/jane-doe-123
-    """
     u = urlparse(url)
     parts = [p for p in u.path.split("/") if p]
     slug = parts[1] if len(parts) > 1 else ""
@@ -27,7 +22,6 @@ def canonical_key(url: str) -> str:
 
 
 def dedupe_to_hits(raw_items: list[dict]) -> list[DiscoveryHit]:
-    """Raw Serper items -> deduped DiscoveryHit list (one per person)."""
     by_key: dict[str, DiscoveryHit] = {}
     for it in raw_items:
         link = it.get("link")

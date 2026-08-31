@@ -22,23 +22,17 @@ async def discover(
           -> Serper (equal share per query)   : raw organic results
           -> normalize (filter /in/ + dedup)  : DiscoveryHit list
           -> top-up (round-robin)             : refill what dedup removed
-
-    Every query carries the given location (enforced in query_agent).
-    The returned DiscoveryResult.hits feed the `Normalize + validate` box.
-    Fully async; served by discovery/api.py (FastAPI).
     """
     if not jd or not jd.strip():
         raise ValueError("Empty job description.")
 
-    # 1) LLM #1: JD + location -> queries
+    # 1-LLM #1: JD + location -> queries
     signals = await generate_queries(jd, location)
     queries = signals.boolean_queries
     if not queries:
         raise RuntimeError("LLM produced no queries.")
 
-    # 2) Serper: equal share per query — every query contributes the same
-    # number of people to the pool (max_hits / queries, ~10 results/page),
-    # so no single query dominates the final list.
+    # 2-Serper
     per_query = math.ceil(max_hits / len(queries))
     pages = min(_MAX_PAGES, math.ceil(per_query / 10))
     leftovers: dict[str, list[dict]] = {}
@@ -51,10 +45,7 @@ async def discover(
         pages_used[q] = pages
     hits = dedupe_to_hits(raw_all)
 
-    # 3) Top-up: cross-query duplicates shrink the pool below max_hits, so
-    # draw replacements round-robin — leftover results we already paid for
-    # first, then deeper pages — until the target is reached or every query
-    # runs dry.
+    # 3-Top-up: cross-query duplicates shrink the pool below max_hits
     exhausted: set[str] = set()
     while len(hits) < max_hits and len(exhausted) < len(queries):
         for q in queries:

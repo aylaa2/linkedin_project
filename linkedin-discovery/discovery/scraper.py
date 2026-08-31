@@ -1,14 +1,3 @@
-"""
-Scraper box (Normalize + validate) — Tania & Mihaela.
-
-Ia URL-urile produse de cutia de discovery (Serper/ddgs) si scoate datele
-STRUCTURATE din fiecare profil: nume, rol, experienta, educatie, locatie.
-
-Lant de fallback cu portofele separate (daca unul se termina, continua urmatorul):
-    Apify (harvestapi)  ->  RapidAPI  ->  ScraperAPI
-Toate sunt mapate la ACELASI model Profile / acelasi HTML.
-"""
-
 import os
 import re
 import json
@@ -32,11 +21,8 @@ try:
 except ImportError:
     BeautifulSoup = None
 
-# Pune SCRAPER_DEBUG=1 in .env ca sa vezi exact ce raspunde fiecare API.
 DEBUG = bool(os.getenv("SCRAPER_DEBUG"))
 
-
-# ----------------------------- Model -----------------------------
 
 class Profile(BaseModel):
     """Profil imbogatit, gata de afisat. Acelasi format indiferent de sursa."""
@@ -50,8 +36,6 @@ class Profile(BaseModel):
     source: str = ""  # apify / rapidapi / scraperapi / (gol = doar din discovery)
     raw_html: str = ""
 
-
-# ----------------------------- Helperi de mapare -----------------------------
 
 def _txt(v):
     if isinstance(v, dict):
@@ -148,8 +132,6 @@ def map_apify(item):
     return p
 
 
-# ----------------------------- Bright Data -----------------------------
-
 def scrape_brightdata(urls):
     """Batch prin Bright Data (async: trigger -> poll -> download). (items, eroare).
     5000 profile/luna gratis. Portofel separat de Apify/RapidAPI."""
@@ -220,8 +202,6 @@ def map_brightdata(item):
     return p
 
 
-# ----------------------------- RapidAPI -----------------------------
-
 def map_rapidapi(item):
     p = {"nume": "", "url": "", "experienta": [], "educatie": [], "rol": "", "locatie": ""}
     if not isinstance(item, dict):
@@ -257,9 +237,7 @@ def map_rapidapi(item):
 
 
 def _rapidapi_endpoints():
-    """Lista de API-uri LinkedIn de pe RapidAPI. Fiecare are cota GRATIS proprie,
-    toate merg cu aceeasi RAPIDAPI_KEY. Cand unul ramane fara cota, trecem la urmatorul.
-    Poti suprascrie din .env: RAPIDAPI_ENDPOINTS=host,path,param;host2,path2,param2"""
+    """Lista de API-uri LinkedIn de pe RapidAPI"""
     raw = os.getenv("RAPIDAPI_ENDPOINTS", "")
     if raw:
         eps = []
@@ -520,8 +498,6 @@ def _nume_din_title(title):
         return t.split(" - ", 1)[0].strip()
     return ""
 
-
-# ----------------------------- HTML -----------------------------
 
 _CSS = """
   body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:24px; color:#000; }

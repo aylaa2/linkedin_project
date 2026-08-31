@@ -13,16 +13,7 @@ async def serper_search(
     mock: bool = False,
     start_page: int = 1,
 ) -> list[dict]:
-    """Run ONE query against Serper.dev, pulling `pages` pages from `start_page`.
-
-    Returns raw organic items: {"link", "title", "snippet"}.
-
-    Fallback: daca NU exista SERPER_API_KEY, cauta GRATIS prin ddgs (DuckDuckGo).
-    Doar `--dry-run` (mock=True) foloseste rezultate fixe.
-
-    To swap in SerpApi: change URL/params here and map its
-    organic_results[].{link,title,snippet} — nothing else in the pipeline changes.
-    """
+    
     if mock:
         return _mock(query)
     if not has_serper():

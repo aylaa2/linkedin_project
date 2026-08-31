@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ---- LLM (Groq) ----
+# LLM (Groq)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 
@@ -11,15 +11,14 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 # thing (e.g. to point at another provider) without touching code.
 DISCOVERY_MODEL = os.getenv("DISCOVERY_MODEL", f"groq:{GROQ_MODEL}")
 
-# ---- SERP (Serper.dev) ----
+# SERP (Serper)
 SERPER_API_KEY = os.getenv("SERPER_API_KEY", "")
 SERP_PAGES = int(os.getenv("SERP_PAGES", "2"))
 SERP_GL = os.getenv("SERP_GL", "us")
 SERP_HL = os.getenv("SERP_HL", "en")
 
 
-# ---- Scraper (Normalize + validate box — Tania & Mihaela) ----
-# Aduce datele structurate din profil. Lant de fallback cu portofele separate:
+# Aduce datele structurate din profil. Lant de fallback
 #   Apify (harvestapi) -> RapidAPI -> ScraperAPI
 APIFY_TOKEN = os.getenv("APIFY_TOKEN", "")
 APIFY_ACTOR = os.getenv("APIFY_ACTOR", "harvestapi~linkedin-profile-scraper")
