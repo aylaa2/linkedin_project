@@ -1,0 +1,15 @@
+Căutăm un Backend Software Engineer cu minimum 3 ani de experiență.
+
+Cerințe obligatorii:
+- Python
+- FastAPI sau Django
+- PostgreSQL
+- experiență cu REST APIs
+- Docker
+
+Constituie avantaj:
+- AWS
+- Kubernetes
+
+Candidatul trebuie să poată lucra în Dublin sau remote din Irlanda.
+Studii superioare în informatică reprezintă un avantaj.

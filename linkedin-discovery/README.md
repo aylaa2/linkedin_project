@@ -16,8 +16,9 @@ clean deduplicated LinkedIn profile URLs that flow **down into the
                                               ▼
                           Normalize + validate                ← next box
                                               ▼
-                          Intelligence plane: Filter · Rank · Review
-```
+┌─ Intelligence plane: Filter · Rank · Review ────────────────┐
+│  BGE-M3 Semantic Reranker → Llama 3.3 Evaluation → Scoring  │
+└─────────────────────────────────────────────────────────────┘
 
 Stack: **Python**, **pydantic-ai**, **Groq (Llama 3.3 70B)**, async (`httpx`),
 served by **FastAPI**. Output is Pydantic models / a JSON list of URLs.
@@ -87,6 +88,32 @@ Discovery does only **cheap hygiene**: keep `/in/` URLs, dedup by canonical URL.
 HTML. So this box deliberately does **not** parse names; it hands over
 `title` + `snippet` raw.
 
+## The handoff contract (into Intelligence plane)
+
+Once the `Normalize + validate` box finishes converting raw scraped HTML into `Candidate` Pydantic models (defined in `parse/models.py`), it hands them off to the **Candidate Scorer**.
+
+The scorer exposes a single, decoupled entrypoint `process_candidates_pipeline()`:
+
+```python
+from scorer.candidate_scorer import process_candidates_pipeline
+
+# Pipeline:
+# 1. Local Semantic Reranking (FlagEmbedding BGE-M3) keeps only top candidates.
+# 2. LLM Evaluation (Groq Llama 3.3) extracts requirements and scores semantically.
+# 3. Deterministic Heuristics calculate exact skill and experience math.
+results = process_candidates_pipeline(
+    recruiter_requirement="JD text here...",
+    candidates=[candidate_1, candidate_2, ...]
+)
+# Returns a list of `CandidateScoreResult` containing full score breakdowns.
+```
+
+### Configuration (Scorer)
+The Intelligence plane exposes several hardcoded levers in `scorer/reranker.py` that dictate how aggressively candidates are filtered before hitting the LLM:
+- `USE_RERANKER` (default: `True`): Toggles the local BGE-M3 semantic filtering. Setting this to `False` sends all candidates to Groq (slower, more expensive, but exhaustive).
+- `RERANKER_MIN_PROFILES` (default: `3`): Guarantees that the top N candidates will always be evaluated by Groq, regardless of their semantic score.
+- `RERANKER_THRESHOLD` (default: `0.2`): The minimum semantic similarity score a candidate must achieve to bypass the minimum profile limit and be evaluated.
+
 ## Design notes
 
 - **LLM #1 uses pydantic-ai** with `output_type=QuerySignals`, so the model's
@@ -124,6 +151,7 @@ HTML. So this box deliberately does **not** parse names; it hands over
    deeper pages) until the target is reached or the queries run dry.
    `stats.serp_pages` is the credits spent per search — log it so Miruna/Vali
    can budget end-to-end cost.
+4. **Scorer Reranking Optimization** — Experiment with `RERANKER_THRESHOLD` and `RERANKER_MIN_PROFILES` in `scorer/reranker.py`. A higher threshold saves Groq API tokens but risks aggressively filtering out "diamond in the rough" candidates. We need to find the sweet spot for the BGE-M3 model on Romanian IT resumes.
 
 > Note for the team: the diagram's Discovery plane says **Playwright + proxies**
 > for the scraper, while the original text spec said **ScraperAPI instead of
